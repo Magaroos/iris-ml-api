@@ -1,0 +1,17 @@
+Project Title: Iris Flower Classification API
+
+Problem:
+This project predicts the species of a flower using its measurements.
+
+Dataset:
+Iris dataset containing:
+- Sepal length
+- Sepal width
+- Petal length
+- Petal width
+
+Target:
+Species of flower:
+- Setosa
+- Versicolor
+- Virginica

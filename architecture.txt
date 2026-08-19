@@ -1,0 +1,11 @@
+User sends request to API
+        ↓
+API receives the request
+        ↓
+Input validation is performed
+        ↓
+Validated data is sent to the ML model
+        ↓
+Model processes the data and predicts the species
+        ↓
+API returns the prediction as response

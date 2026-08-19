@@ -1,0 +1,28 @@
+API Endpoint: POST /predict
+
+Description:
+This API predicts the species of a flower based on its measurements.
+
+Input:
+The API accepts the following data:
+- sepal_length (float)
+- sepal_width (float)
+- petal_length (float)
+- petal_width (float)
+
+Output:
+The API returns:
+- species (setosa, versicolor, or virginica)
+
+Example Input:
+{
+  "sepal_length": 5.1,
+  "sepal_width": 3.5,
+  "petal_length": 1.4,
+  "petal_width": 0.2
+}
+
+Example Output:
+{
+  "species": "setosa"
+}
