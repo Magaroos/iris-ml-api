@@ -1,13 +1,24 @@
-from sklearn.datasets import load_iris
+import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
-import joblib   # ✅ import here (top)
+from sklearn.preprocessing import LabelEncoder
+import joblib
 
-# Load dataset
-data = load_iris()
-X = data.data
-y = data.target
+# Load dataset from CSV
+data = pd.read_csv("data/iris_dataset.csv")
+
+# Show data (for checking)
+print(data.head())
+print("Columns:", data.columns)
+
+# Split into input (X) and output (y)
+X = data.drop("species", axis=1)   # features
+y = data["species"]                # target
+
+# Convert text labels to numbers (setosa → 0, etc.)
+le = LabelEncoder()
+y = le.fit_transform(y)
 
 # Split dataset
 X_train, X_test, y_train, y_test = train_test_split(
@@ -28,6 +39,6 @@ y_pred = model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 print("Accuracy:", accuracy)
 
-# ✅ SAVE MODEL (PASTE HERE — LAST STEP)
+# Save model
 joblib.dump(model, "ml/saved_model/model.joblib")
 print("Model saved successfully!")
