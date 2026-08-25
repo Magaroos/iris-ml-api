@@ -1,17 +1,20 @@
 from fastapi import FastAPI
 import joblib
 import pandas as pd
+from app.models.schemas import PredictionInput
 
 app = FastAPI()
 
 model = None  # global variable
+le = None
 
 # ✅ Load model ONCE at startup
 @app.on_event("startup")
 def load_model():
-    global model
+    global model, le
     model = joblib.load("ml/saved_model/model.joblib")
-    print("✅ Model loaded successfully!")
+    le = joblib.load("ml/saved_model/label_encoder.joblib")
+    print("✅ Model & Encoder loaded!")
 
 @app.get("/")
 def root():
@@ -19,16 +22,19 @@ def root():
 
 # ✅ Accept input and predict
 @app.post("/predict")
-def predict():
+def predict(input: PredictionInput):
+
     data = {
-        "sepal length (cm)": 5.1,
-        "sepal width (cm)": 3.5,
-        "petal length (cm)": 1.4,
-        "petal width (cm)": 0.2
+        "sepal length (cm)": input.sepal_length,
+        "sepal width (cm)": input.sepal_width,
+        "petal length (cm)": input.petal_length,
+        "petal width (cm)": input.petal_width
     }
 
     df = pd.DataFrame([data])
 
     prediction = model.predict(df)
 
-    return {"prediction": int(prediction[0])}
+    predicted_label = le.inverse_transform(prediction)
+
+    return {"prediction": predicted_label[0]}

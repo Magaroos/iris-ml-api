@@ -42,3 +42,6 @@ print("Accuracy:", accuracy)
 # Save model
 joblib.dump(model, "ml/saved_model/model.joblib")
 print("Model saved successfully!")
+
+joblib.dump(le, "ml/saved_model/label_encoder.joblib")
+print("Label encoder saved!")
