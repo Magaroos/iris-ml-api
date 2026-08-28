@@ -1,0 +1,21 @@
+2026-08-28 11:19:56,590 | INFO | Model & Encoder loaded successfully
+2026-08-28 11:20:01,135 | INFO | GET /docs | request_id=79a4e09d-b52c-42ab-8d03-6cdcf1106219 | time=0.0045s
+2026-08-28 11:20:01,462 | INFO | GET /openapi.json | request_id=2bc12c9b-bf20-4b58-b849-09afcb833def | time=0.0518s
+2026-08-28 11:20:11,508 | INFO | Prediction success | request_id=46a33ca3-78a8-4fa0-a9bb-8d132e202172 | result=setosa | confidence=0.53
+2026-08-28 11:20:11,508 | INFO | POST /predict | request_id=46a33ca3-78a8-4fa0-a9bb-8d132e202172 | time=0.0648s
+2026-08-28 11:20:49,748 | INFO | Model & Encoder loaded successfully
+2026-08-28 11:20:58,222 | INFO | GET /docs | request_id=7af99cf7-b2c6-47be-8378-de042a6d583f | time=0.0053s
+2026-08-28 11:20:58,284 | INFO | GET /openapi.json | request_id=cda1ddf1-eeab-4a16-b60d-40da57f29c57 | time=0.0133s
+2026-08-28 11:21:03,063 | INFO | Prediction success | request_id=12fa7f68-ec7b-4911-935d-ab1fc18ffd76 | result=setosa | confidence=0.53
+2026-08-28 11:21:03,063 | INFO | POST /predict | request_id=12fa7f68-ec7b-4911-935d-ab1fc18ffd76 | time=0.0632s
+2026-08-28 11:21:46,091 | INFO | Prediction success | request_id=c9ee2b5d-444d-43e2-ac9a-0499c11fe6a3 | result=setosa | confidence=0.53
+2026-08-28 11:21:46,091 | INFO | POST /predict | request_id=c9ee2b5d-444d-43e2-ac9a-0499c11fe6a3 | time=0.0221s
+2026-08-28 11:22:26,732 | INFO | Model & Encoder loaded successfully
+2026-08-28 11:22:55,300 | INFO | GET /docs | request_id=ce52aad4-d755-4caa-83d6-c79ef68c77ed | time=0.0013s
+2026-08-28 11:22:55,466 | INFO | GET /openapi.json | request_id=930d2f49-30e9-497a-aeb1-9ee4d5b7a351 | time=0.0085s
+2026-08-28 11:23:31,923 | INFO | Model & Encoder loaded successfully
+2026-08-28 11:24:02,629 | INFO | Model & Encoder loaded successfully
+2026-08-28 11:49:48,543 | INFO | GET /docs | request_id=829b5bc9-a01b-4e53-828d-6419a5eec07c | time=0.0000s
+2026-08-28 11:49:48,601 | INFO | GET /openapi.json | request_id=b9ea802e-34d7-407f-aeb4-fdc5c288529b | time=0.0172s
+2026-08-28 11:49:55,632 | INFO | Prediction success | request_id=0944ae39-333e-4f67-adbc-908c54d75ddb | result=setosa | confidence=0.53
+2026-08-28 11:49:55,639 | INFO | POST /predict | request_id=0944ae39-333e-4f67-adbc-908c54d75ddb | time=0.0534s
