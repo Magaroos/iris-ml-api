@@ -19,3 +19,17 @@
 2026-08-28 11:49:48,601 | INFO | GET /openapi.json | request_id=b9ea802e-34d7-407f-aeb4-fdc5c288529b | time=0.0172s
 2026-08-28 11:49:55,632 | INFO | Prediction success | request_id=0944ae39-333e-4f67-adbc-908c54d75ddb | result=setosa | confidence=0.53
 2026-08-28 11:49:55,639 | INFO | POST /predict | request_id=0944ae39-333e-4f67-adbc-908c54d75ddb | time=0.0534s
+2026-08-31 12:15:48,624 | INFO | Model & Encoder loaded successfully
+2026-08-31 12:15:49,403 | INFO | GET /docs | request_id=b112d376-0ab2-4a8f-8f18-dcaa5e0423c3 | time=0.0000s
+2026-08-31 12:15:49,549 | INFO | GET /openapi.json | request_id=a999fa43-7ac6-497c-b58c-a98c4a518886 | time=0.0096s
+2026-08-31 12:15:57,550 | INFO | GET /api/v1/health | request_id=678b868e-d60e-4e7d-bd18-97b52a969aa8 | time=0.0050s
+2026-08-31 12:16:17,203 | INFO | Prediction success | request_id=708643b7-df4d-4539-b508-d8db9e228198 | result=setosa | confidence=0.53
+2026-08-31 12:16:17,211 | INFO | POST /api/v1/predict | request_id=708643b7-df4d-4539-b508-d8db9e228198 | time=0.0493s
+2026-08-31 12:21:10,255 | INFO | POST /api/v1/predict | request_id=d2579047-b752-4fb7-a294-c1f34ea69ec1 | time=0.0011s
+2026-08-31 12:21:28,285 | INFO | POST /api/v1/predict | request_id=5d8763ea-db6d-413c-acb5-081c42b8d43f | time=0.0044s
+2026-08-31 15:03:44,043 | INFO | GET /docs | request_id=21df6021-9683-48bc-af58-b3d3a7c3d34a | time=0.0010s
+2026-08-31 15:03:44,192 | INFO | GET /openapi.json | request_id=442793ae-dd12-41e7-9ef8-60c473370cd9 | time=0.0028s
+2026-08-31 15:03:46,051 | INFO | GET /docs | request_id=75abf87d-a3b8-4403-8db4-ba460f3661cc | time=0.0010s
+2026-08-31 15:03:46,093 | INFO | GET /openapi.json | request_id=a7c71769-c492-4b7b-a458-f435c5d95d71 | time=0.0010s
+2026-08-31 15:19:37,167 | INFO | GET /docs | request_id=bb58bd46-80fd-4b96-a9ff-33e941377339 | time=0.0011s
+2026-08-31 15:19:37,217 | INFO | GET /openapi.json | request_id=9571f1df-96af-4c21-8867-79005cfe2075 | time=0.0010s
