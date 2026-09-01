@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import Optional
+from typing import List
 
 
 class PredictionInput(BaseModel):
@@ -12,3 +13,9 @@ class PredictionOutput(BaseModel):
     prediction: str
     confidence: float
     request_id: str
+
+class PredictionBatchInput(BaseModel):
+    inputs: List[PredictionInput]
+
+class PredictionBatchOutput(BaseModel):
+    predictions: List[PredictionOutput]
