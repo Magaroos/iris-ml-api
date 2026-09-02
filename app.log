@@ -43,3 +43,21 @@
 2026-09-01 12:29:56,138 | INFO | Batch success | request_id=50fe65a1-57da-48ac-84c8-9e1a27e28c5f | count=3
 2026-09-01 12:29:56,145 | INFO | POST /api/v1/predict-batch | request_id=50fe65a1-57da-48ac-84c8-9e1a27e28c5f | time=0.0910s
 2026-09-01 12:57:38,090 | INFO | POST /api/v1/predict-batch | request_id=d4ed6322-a844-451d-b842-bbae2b9f2841 | time=0.0051s
+2026-09-01 14:20:12,398 | INFO | GET / | request_id=f183f28e-ace6-4551-9966-c9a7c8e98bfa | time=0.0000s
+2026-09-02 10:59:31,366 | INFO | Model loaded from ml/saved_model/model.joblib
+2026-09-02 10:59:37,491 | INFO | Model loaded from ml/saved_model/model.joblib
+2026-09-02 10:59:49,320 | INFO | Model loaded from ml/saved_model/model.joblib
+2026-09-02 11:00:08,289 | INFO | GET / | request_id=d998ed4e-856b-40bd-a607-3dad4e9109cd | time=0.0158s
+2026-09-02 11:00:08,321 | INFO | GET /favicon.ico | request_id=76d98c39-fd24-406e-82ce-022443ec40e0 | time=0.0082s
+2026-09-02 11:00:14,123 | INFO | GET /docs | request_id=23cc9f89-e6fd-4d48-93ac-fdcc7978a104 | time=0.0027s
+2026-09-02 11:00:14,367 | INFO | GET /openapi.json | request_id=b700729a-5a0d-4f03-a546-4aff436e9ce7 | time=0.0641s
+2026-09-02 11:01:47,979 | INFO | GET /api/v1/model-info | request_id=31a7e986-2636-41f2-aae9-0e825773878c | time=0.0056s
+2026-09-02 11:02:25,738 | INFO | Prediction success | request_id=feb77685-c772-4d49-a002-33ddf519ba1f | result=setosa | confidence=1.0
+2026-09-02 11:02:25,753 | INFO | POST /api/v1/predict | request_id=feb77685-c772-4d49-a002-33ddf519ba1f | time=0.2179s
+2026-09-02 11:03:56,204 | INFO | Batch success | request_id=bfdba27c-744b-488b-8baf-0b9970e6406e | count=3
+2026-09-02 11:03:56,207 | INFO | POST /api/v1/predict-batch | request_id=bfdba27c-744b-488b-8baf-0b9970e6406e | time=0.1154s
+2026-09-02 11:06:25,687 | INFO | Model loaded from ml/saved_model/model.joblib
+2026-09-02 11:06:43,053 | INFO | GET /docs | request_id=e9eb7143-ae63-4777-ac6a-3069d83359f7 | time=0.0032s
+2026-09-02 11:06:43,279 | INFO | GET /openapi.json | request_id=015de015-d11c-4e0b-8cf0-fba23a4e84d1 | time=0.0510s
+2026-09-02 11:06:57,250 | INFO | POST /api/v1/predict | request_id=72d3c031-01c7-4235-95ba-f42fc59ee47e | time=0.0167s
+2026-09-02 11:07:27,426 | INFO | POST /api/v1/predict-batch | request_id=51de5461-c222-42af-9d56-97ae2178e429 | time=0.0074s

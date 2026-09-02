@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException, Request
 import numpy as np
+from app.config import settings
 
 from app.models.schemas import (
     PredictionInput,
@@ -53,6 +54,11 @@ def predict(request: Request, input_data: PredictionInput):
 # 🔹 Batch Prediction (SIMPLIFIED)
 @router.post("/predict-batch", response_model=PredictionBatchOutput)
 def predict_batch(request: Request, input_data: PredictionBatchInput):
+    if len(input_data.inputs) > settings.MAX_BATCH_SIZE:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Max batch size is {settings.MAX_BATCH_SIZE}"
+        )
     request_id = request.state.request_id
 
     try:

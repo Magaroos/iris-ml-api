@@ -6,16 +6,17 @@ import joblib
 
 from app.logging_config import logger
 from app.routers.v1 import router as v1_router
+from app.config import settings
 
-app = FastAPI()
+app = FastAPI(title=settings.API_TITLE)
 
 # ✅ Load model once at startup
 @app.on_event("startup")
 def load_model():
-    app.state.model = joblib.load("ml/saved_model/model.joblib")
+    app.state.model = joblib.load(settings.MODEL_PATH)
     app.state.le = joblib.load("ml/saved_model/label_encoder.joblib")
 
-    logger.info("Model & Encoder loaded successfully")
+    logger.info(f"Model loaded from {settings.MODEL_PATH}")
 
 
 # ✅ Middleware
