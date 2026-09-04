@@ -7,6 +7,8 @@ import joblib
 from app.logging_config import logger
 from app.routers.v1 import router as v1_router
 from app.config import settings
+from app.routers.v2 import router as v2_router
+
 
 app = FastAPI(title=settings.API_TITLE)
 
@@ -41,6 +43,7 @@ async def log_requests(request: Request, call_next):
 
 # ✅ Include router
 app.include_router(v1_router)
+app.include_router(v2_router)
 
 
 @app.get("/")
