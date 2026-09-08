@@ -34,18 +34,17 @@ It supports:
 
 ---
 
-⚙️ API Endpoints
+## ⚙️ API Endpoints
 
-🔹 Health Check
-
-`GET /api/v1/health`
+### 🔹 Health Check
+**GET** `/api/v1/health`
 
 ```json
 {
   "status": "ok",
   "model_loaded": true
 }
- 
+
 🔹 Single Prediction (v1)
   POST /api/v1/predict
   {
