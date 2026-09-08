@@ -45,7 +45,7 @@ It supports:
   "status": "ok",
   "model_loaded": true
 }
-  ------------------------------------------------------------------------------
+ 
 🔹 Single Prediction (v1)
   POST /api/v1/predict
   {
@@ -60,7 +60,7 @@ It supports:
   "confidence": 0.95,
   "request_id": "abc-123"
   }
-  ---------------------------------------------------------------------------------
+  
 🔹 Batch Prediction
   POST /api/v1/predict-batch
   {
@@ -69,7 +69,7 @@ It supports:
     { ... }
   ]
   }
-  -----------------------------------------------------------------------------------
+  
 🔹 Model Info
   GET /api/v1/model-info
   {
@@ -82,7 +82,7 @@ It supports:
       "petal_width"
     ]
   }
-  --------------------------------------------------------------------------------------
+  
 🔹 Prediction (v2 - Updated API)
   POST /api/v2/predict
   {
@@ -91,17 +91,19 @@ It supports:
     "model_version": "v2",
     "request_id": "abc-123"
   }
-  ---------------------------------------------------------------------------------------
+  
 🔄 API Versioning
   Version	    Purpose
   v1	        Stable API
   v2	        Improved response
-  ----------------------------------------------------------------------------------------
+  
 Key Differences
 v1	                        v2
 confidence	                probability
+
 ❌ No version info	        ✅ Includes model_version
--------------------------------------------------------------------------------------------
+
+
 📦 Project Structure
 ml-api-project/
 │
@@ -125,7 +127,7 @@ ml-api-project/
 ├── docker-compose.yml
 ├── requirements.txt
 └── README.md
----------------------------------------------------------------------------
+
 ⚙️ Configuration (.env)
 
 Environment variables are used instead of hardcoding values.
@@ -137,7 +139,7 @@ Example:
       LOG_LEVEL=INFO
 
 👉 Used by Docker Compose at runtime
-----------------------------------------------------------------------------
+
 🐳 Docker & Containerization
 
 This project is fully containerized.
@@ -157,7 +159,7 @@ This project is fully containerized.
     ./ml/saved_model:/app/ml/saved_model
 
     👉 Allows real-time model updates without rebuilding image
-------------------------------------------------------------------------------
+
 
 🧪 Testing (Pytest)
 Run tests:
@@ -170,7 +172,7 @@ Covered Cases:
     ✅ Batch prediction
     ✅ Batch limit validation
     ✅ API version testing
---------------------------------------------------------------------------------
+
 
 🛡️ Validation & Error Handling
 Handled using Pydantic:
@@ -178,14 +180,13 @@ Handled using Pydantic:
     - Invalid data types → 422
     - Batch overflow → 400
     - Server errors → 500
----------------------------------------------------------------------------------
 
 📊 Logging
 Each request includes:
   -> request_id
   -> logs for debugging
   -> error tracking
----------------------------------------------------------------------------------
+
 
 🚀 Key Concepts Demonstrated
     - FastAPI API development
@@ -196,7 +197,8 @@ Each request includes:
     - API versioning
     - Automated testing
     - Logging & validation
-----------------------------------------------------------------------------------
+
+
 
 📌 Conclusion
 
@@ -207,7 +209,6 @@ It is designed to be:
     ✅ Reproducible
     ✅ Easy to deploy
     ✅ Industry-ready
----------------------------------------------------------------------------------------
 
 ## 🚀 How to Run This Project (Using Docker Compose)
 
