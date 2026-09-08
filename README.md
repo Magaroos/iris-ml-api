@@ -1,192 +1,270 @@
-🚀 ML Prediction API
+🚀 ML Prediction API (Dockerized with Compose)
+
 📌 Overview
 
-This project is a production-style Machine Learning API built using FastAPI.
-It serves predictions from a trained model and demonstrates real-world backend practices like:
+This project is a **production-style Machine Learning API** built using **FastAPI** and fully containerized using **Docker and Docker Compose**.
 
-API design
-Input validation
-Batch processing
-Configuration management
-Logging
-Automated testing
-API versioning
+It serves predictions from a trained ML model (Iris dataset) and demonstrates **real-world backend + DevOps practices**.
+
+---
+
 🧠 What This API Does
 
-The API predicts the class of an input using a trained ML model (Iris dataset).
+The API predicts the class of an input flower using a trained Machine Learning model.
 
 It supports:
 
-Single prediction
-Batch prediction (multiple inputs)
-Input validation
-Versioned responses
+- ✅ Single prediction
+- ✅ Batch prediction (multiple inputs)
+- ✅ Input validation
+- ✅ API versioning (v1 & v2)
+- ✅ Structured responses
+- ✅ Logging & request tracking
+
+---
+
+⚙️ Tech Stack
+
+- **Backend**: FastAPI
+- **Machine Learning**: Scikit-learn
+- **Containerization**: Docker
+- **Orchestration**: Docker Compose
+- **Testing**: Pytest
+- **Config Management**: Environment Variables (.env)
+
+---
+
 ⚙️ API Endpoints
+
 🔹 Health Check
-GET /api/v1/health
-Response
+
+`GET /api/v1/health`
+
+```json
 {
   "status": "ok",
   "model_loaded": true
 }
+  ------------------------------------------------------------------------------
 🔹 Single Prediction (v1)
-POST /api/v1/predict
-Request
-{
+  POST /api/v1/predict
+  {
   "sepal_length": 5.1,
   "sepal_width": 3.5,
   "petal_length": 1.4,
   "petal_width": 0.2
-}
-Response
-{
+  }
+  Response : 
+  {
   "prediction": "setosa",
   "confidence": 0.95,
   "request_id": "abc-123"
-}
+  }
+  ---------------------------------------------------------------------------------
 🔹 Batch Prediction
-POST /api/v1/predict-batch
-Request
-{
+  POST /api/v1/predict-batch
+  {
   "inputs": [
     { ... },
     { ... }
   ]
-}
-Response
-{
-  "predictions": [
-    { "prediction": "...", "confidence": 0.9 },
-    { "prediction": "...", "confidence": 0.8 }
-  ]
-}
+  }
+  -----------------------------------------------------------------------------------
 🔹 Model Info
-GET /api/v1/model-info
-Response
-{
-  "model_name": "RandomForestClassifier",
-  "version": "v1",
-  "features": [
-    "sepal_length",
-    "sepal_width",
-    "petal_length",
-    "petal_width"
-  ]
-}
+  GET /api/v1/model-info
+  {
+    "model_name": "RandomForestClassifier",
+    "version": "v1",
+    "features": [
+      "sepal_length",
+      "sepal_width",
+      "petal_length",
+      "petal_width"
+    ]
+  }
+  --------------------------------------------------------------------------------------
 🔹 Prediction (v2 - Updated API)
-POST /api/v2/predict
-Response
-{
-  "prediction": "setosa",
-  "probability": 0.95,
-  "model_version": "v2",
-  "request_id": "abc-123"
-}
-
-👉 This version introduces changes without breaking older clients.
-
+  POST /api/v2/predict
+  {
+    "prediction": "setosa",
+    "probability": 0.95,
+    "model_version": "v2",
+    "request_id": "abc-123"
+  }
+  ---------------------------------------------------------------------------------------
 🔄 API Versioning
-
-Two versions of the API exist:
-
-Version	Purpose
-v1	Original stable API
-v2	Updated API with improved response
+  Version	    Purpose
+  v1	        Stable API
+  v2	        Improved response
+  ----------------------------------------------------------------------------------------
 Key Differences
-v1	v2
-confidence	probability
-❌ No version info	✅ Includes model_version
-
-👉 This ensures backward compatibility
-
+v1	                        v2
+confidence	                probability
+❌ No version info	        ✅ Includes model_version
+-------------------------------------------------------------------------------------------
 📦 Project Structure
 ml-api-project/
 │
 ├── app/
-│   ├── main.py            # Entry point
-│   ├── config.py         # Environment settings
+│   ├── main.py
+│   ├── config.py
 │   ├── routers/
-│   │   ├── v1.py         # Version 1 API
-│   │   └── v2.py         # Version 2 API
+│   │   ├── v1.py
+│   │   └── v2.py
 │   ├── models/
-│   │   └── schemas.py    # Request/Response models
-│   ├── logging_config.py # Logging setup
+│   │   └── schemas.py
+│   ├── logging_config.py
 │
 ├── ml/
-│   └── saved_model/      # Trained model files
+│   └── saved_model/
 │
-├── tests/                # Automated tests
-│   ├── conftest.py
-│   ├── test_health.py
-│   ├── test_predict.py
-│   ├── test_batch.py
-│   ├── test_batch_limit.py
-│   ├── test_predict_fail.py
-│   └── test_v2.py
+├── tests/
 │
-├── .env                  # Environment variables
+├── .env
+├── Dockerfile
+├── docker-compose.yml
 ├── requirements.txt
 └── README.md
+---------------------------------------------------------------------------
 ⚙️ Configuration (.env)
 
-The project uses environment variables for flexibility.
+Environment variables are used instead of hardcoding values.
 
 Example:
+      MODEL_PATH=ml/saved_model/model.joblib
+      MAX_BATCH_SIZE=5
+      API_TITLE=ML Prediction API
+      LOG_LEVEL=INFO
 
-MAX_BATCH_SIZE=5
-MODEL_PATH=ml/saved_model/model.joblib
+👉 Used by Docker Compose at runtime
+----------------------------------------------------------------------------
+🐳 Docker & Containerization
 
-👉 Changes require server restart
+This project is fully containerized.
+
+🔹 Dockerfile :
+    -> Defines how the application is built
+    -> Installs dependencies
+    -> Runs FastAPI using Uvicorn
+
+🔹 Docker Compose :
+    -> Manages container setup
+    -> Handles environment variables
+    -> Maps ports
+    -> Supports volume mounting
+
+🔹 Volume Usage
+    ./ml/saved_model:/app/ml/saved_model
+
+    👉 Allows real-time model updates without rebuilding image
+------------------------------------------------------------------------------
 
 🧪 Testing (Pytest)
-
-Automated tests ensure API reliability.
+Run tests:
+    pytest -v
 
 Covered Cases:
-✅ Health check
-✅ Successful prediction
-✅ Invalid input (422 error)
-✅ Batch prediction
-✅ Batch size limit (400 error)
-✅ Version comparison (v1 vs v2)
-▶ Run Tests
-python -m pytest -v
-Example Output
-6 passed, 0 failed
+    ✅ Health check
+    ✅ Valid prediction
+    ✅ Invalid input (422)
+    ✅ Batch prediction
+    ✅ Batch limit validation
+    ✅ API version testing
+--------------------------------------------------------------------------------
+
 🛡️ Validation & Error Handling
+Handled using Pydantic:
+    - Missing fields → 422
+    - Invalid data types → 422
+    - Batch overflow → 400
+    - Server errors → 500
+---------------------------------------------------------------------------------
 
-The API uses Pydantic for validation.
-
-Handles:
-Missing fields → 422 Unprocessable Entity
-Invalid types → 422
-Batch overflow → 400 Bad Request
-Internal errors → 500 Internal Server Error
 📊 Logging
+Each request includes:
+  -> request_id
+  -> logs for debugging
+  -> error tracking
+---------------------------------------------------------------------------------
 
-Each request is tracked with:
+🚀 Key Concepts Demonstrated
+    - FastAPI API development
+    - ML model serving
+    - Docker containerization
+    - Docker Compose orchestration
+    - Environment-based configuration
+    - API versioning
+    - Automated testing
+    - Logging & validation
+----------------------------------------------------------------------------------
 
-request_id
-Response status
-Errors
-
-👉 Helps in debugging and monitoring
-
-🚀 How to Run
-1. Install dependencies
-pip install -r requirements.txt
-2. Start server
-uvicorn app.main:app --reload
-3. Open Swagger UI
-http://127.0.0.1:8000/docs
-🧠 Key Concepts Demonstrated
-API development using FastAPI
-Machine Learning model serving
-Config-driven architecture
-Batch processing
-API versioning
-Automated testing
-Error handling and validation
 📌 Conclusion
 
-This project demonstrates how to build a scalable, testable, and production-ready ML API with proper engineering practices.
+This project demonstrates how to build a scalable, maintainable, and production-ready ML API with modern backend and DevOps practices.
+
+It is designed to be:
+    ✅ Portable (runs anywhere using Docker)
+    ✅ Reproducible
+    ✅ Easy to deploy
+    ✅ Industry-ready
+---------------------------------------------------------------------------------------
+
+## 🚀 How to Run This Project (Using Docker Compose)
+
+### 📌 Prerequisites
+
+- Docker installed  
+- Docker Desktop running  
+
+---
+
+### ▶️ Step 1: Clone the Repository
+
+```bash
+git clone <your-repo-link>
+cd ml-api-project
+```
+
+---
+
+### ▶️ Step 2: Run the Application
+
+```bash
+docker compose up --build
+```
+
+---
+
+### ▶️ Step 3: Access the API
+
+Open your browser:
+
+```
+http://localhost:8000/docs
+```
+
+Swagger UI will open.
+
+---
+
+### ▶️ Step 4: Stop the Application
+
+```bash
+docker compose down
+```
+
+---
+
+### ⚡ Optional: Run in Background
+
+```bash
+docker compose up -d
+```
+
+---
+
+### 📌 Notes
+
+- Environment variables are loaded from `.env`  
+- Model is loaded using volume mapping  
+- No manual setup required  
