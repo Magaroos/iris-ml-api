@@ -37,6 +37,7 @@ It supports:
 ## ⚙️ API Endpoints
 
 ### 🔹 Health Check
+
 **GET** `/api/v1/health`
 
 ```json
@@ -44,53 +45,63 @@ It supports:
   "status": "ok",
   "model_loaded": true
 }
-
 🔹 Single Prediction (v1)
-  POST /api/v1/predict
-  {
+
+POST /api/v1/predict
+
+Request:
+
+{
   "sepal_length": 5.1,
   "sepal_width": 3.5,
   "petal_length": 1.4,
   "petal_width": 0.2
-  }
-  Response : 
-  {
+}
+
+Response:
+
+{
   "prediction": "setosa",
   "confidence": 0.95,
   "request_id": "abc-123"
-  }
-  
+}
 🔹 Batch Prediction
-  POST /api/v1/predict-batch
-  {
+
+POST /api/v1/predict-batch
+
+Request:
+
+{
   "inputs": [
-    { ... },
-    { ... }
+    { "...": "..." },
+    { "...": "..." }
   ]
-  }
-  
+}
 🔹 Model Info
-  GET /api/v1/model-info
-  {
-    "model_name": "RandomForestClassifier",
-    "version": "v1",
-    "features": [
-      "sepal_length",
-      "sepal_width",
-      "petal_length",
-      "petal_width"
-    ]
-  }
-  
+
+GET /api/v1/model-info
+
+{
+  "model_name": "RandomForestClassifier",
+  "version": "v1",
+  "features": [
+    "sepal_length",
+    "sepal_width",
+    "petal_length",
+    "petal_width"
+  ]
+}
 🔹 Prediction (v2 - Updated API)
-  POST /api/v2/predict
-  {
-    "prediction": "setosa",
-    "probability": 0.95,
-    "model_version": "v2",
-    "request_id": "abc-123"
-  }
-  
+
+POST /api/v2/predict
+
+{
+  "prediction": "setosa",
+  "probability": 0.95,
+  "model_version": "v2",
+  "request_id": "abc-123"
+}
+
 🔄 API Versioning
   Version	    Purpose
   v1	        Stable API
