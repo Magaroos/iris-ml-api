@@ -1,43 +1,42 @@
-🚀 ML Prediction API (Dockerized with Compose)
+# 🚀 ML Prediction API (Dockerized with Compose)
 
-📌 Overview
+## 📌 Overview
 
 This project is a **production-style Machine Learning API** built using **FastAPI** and fully containerized using **Docker and Docker Compose**.
 
-It serves predictions from a trained ML model (Iris dataset) and demonstrates **real-world backend + DevOps practices**.
+It serves predictions from a trained ML model (Iris dataset) and demonstrates real-world **backend + DevOps practices**.
 
 ---
 
-🧠 What This API Does
+## 🧠 What This API Does
 
 The API predicts the class of an input flower using a trained Machine Learning model.
 
-It supports:
+### Features
 
-- ✅ Single prediction
-- ✅ Batch prediction (multiple inputs)
-- ✅ Input validation
-- ✅ API versioning (v1 & v2)
-- ✅ Structured responses
-- ✅ Logging & request tracking
+- ✅ Single prediction  
+- ✅ Batch prediction (multiple inputs)  
+- ✅ Input validation  
+- ✅ API versioning (v1 & v2)  
+- ✅ Structured responses  
+- ✅ Logging & request tracking  
 
 ---
 
-⚙️ Tech Stack
+## ⚙️ Tech Stack
 
-- **Backend**: FastAPI
-- **Machine Learning**: Scikit-learn
-- **Containerization**: Docker
-- **Orchestration**: Docker Compose
-- **Testing**: Pytest
-- **Config Management**: Environment Variables (.env)
+- **Backend**: FastAPI  
+- **Machine Learning**: Scikit-learn  
+- **Containerization**: Docker  
+- **Orchestration**: Docker Compose  
+- **Testing**: Pytest  
+- **Config Management**: Environment Variables (.env)  
 
 ---
 
 ## ⚙️ API Endpoints
 
 ### 🔹 Health Check
-
 **GET** `/api/v1/health`
 
 ```json
@@ -45,11 +44,12 @@ It supports:
   "status": "ok",
   "model_loaded": true
 }
+
 🔹 Single Prediction (v1)
 
 POST /api/v1/predict
 
-Request:
+Request
 
 {
   "sepal_length": 5.1,
@@ -58,7 +58,7 @@ Request:
   "petal_width": 0.2
 }
 
-Response:
+Response
 
 {
   "prediction": "setosa",
@@ -68,8 +68,6 @@ Response:
 🔹 Batch Prediction
 
 POST /api/v1/predict-batch
-
-Request:
 
 {
   "inputs": [
@@ -91,7 +89,7 @@ GET /api/v1/model-info
     "petal_width"
   ]
 }
-🔹 Prediction (v2 - Updated API)
+🔹 Prediction (v2)
 
 POST /api/v2/predict
 
@@ -102,17 +100,16 @@ POST /api/v2/predict
   "request_id": "abc-123"
 }
 
+
 🔄 API Versioning
-  Version	    Purpose
-  v1	        Stable API
-  v2	        Improved response
-  
-Key Differences
-v1	                        v2
-confidence	                probability
+Version	      Purpose
+v1	          Stable API
+v2	          Improved response
 
-❌ No version info	        ✅ Includes model_version
-
+Key                       Differences
+v1	                      v2
+confidence	              probability
+❌ No version info	      ✅ Includes model_version
 
 📦 Project Structure
 ml-api-project/
@@ -139,50 +136,43 @@ ml-api-project/
 └── README.md
 
 ⚙️ Configuration (.env)
-
 Environment variables are used instead of hardcoding values.
 
-Example:
-      MODEL_PATH=ml/saved_model/model.joblib
-      MAX_BATCH_SIZE=5
-      API_TITLE=ML Prediction API
-      LOG_LEVEL=INFO
+    MODEL_PATH=ml/saved_model/model.joblib
+    MAX_BATCH_SIZE=5
+    API_TITLE=ML Prediction API
+    LOG_LEVEL=INFO
 
-👉 Used by Docker Compose at runtime
+Used automatically by Docker Compose at runtime.
 
 🐳 Docker & Containerization
+Dockerfile
+    - Defines how the application is built
+    - Installs dependencies
+    - Runs FastAPI using Uvicorn
 
-This project is fully containerized.
+Docker Compose
+    - Manages container setup
+    - Loads environment variables
+    - Maps ports
+    - Supports volume mounting
 
-🔹 Dockerfile :
-    -> Defines how the application is built
-    -> Installs dependencies
-    -> Runs FastAPI using Uvicorn
-
-🔹 Docker Compose :
-    -> Manages container setup
-    -> Handles environment variables
-    -> Maps ports
-    -> Supports volume mounting
-
-🔹 Volume Usage
+Volume Usage
     ./ml/saved_model:/app/ml/saved_model
 
-    👉 Allows real-time model updates without rebuilding image
-
+    👉 Allows updating the model without rebuilding the image
 
 🧪 Testing (Pytest)
 Run tests:
     pytest -v
 
-Covered Cases:
+Covered Cases
     ✅ Health check
     ✅ Valid prediction
     ✅ Invalid input (422)
     ✅ Batch prediction
     ✅ Batch limit validation
     ✅ API version testing
-
 
 🛡️ Validation & Error Handling
 Handled using Pydantic:
@@ -191,12 +181,12 @@ Handled using Pydantic:
     - Batch overflow → 400
     - Server errors → 500
 
+
 📊 Logging
 Each request includes:
-  -> request_id
-  -> logs for debugging
-  -> error tracking
-
+    - request_id
+    - logs for debugging
+    - error tracking
 
 🚀 Key Concepts Demonstrated
     - FastAPI API development
@@ -208,74 +198,38 @@ Each request includes:
     - Automated testing
     - Logging & validation
 
-
-
 📌 Conclusion
-
 This project demonstrates how to build a scalable, maintainable, and production-ready ML API with modern backend and DevOps practices.
 
-It is designed to be:
-    ✅ Portable (runs anywhere using Docker)
-    ✅ Reproducible
-    ✅ Easy to deploy
-    ✅ Industry-ready
+It is:
+  ✅ Portable (runs anywhere using Docker)
+  ✅ Reproducible
+  ✅ Easy to deploy
+  ✅ Industry-ready
 
-## 🚀 How to Run This Project (Using Docker Compose)
+🚀 How to Run This Project (Using Docker Compose)
+📌 Prerequisites
+Docker installed
+Docker Desktop running
+▶️ Step 1: Clone the Repository
+    git clone <your-repo-link>
+    cd ml-api-project
 
-### 📌 Prerequisites
+▶️ Step 2: Run the Application
+    docker compose up --build
 
-- Docker installed  
-- Docker Desktop running  
+▶️ Step 3: Access the API
+    Open in browser:
+    http://localhost:8000/docs
+    Swagger UI will open.
 
----
+▶️ Step 4: Stop the Application
+    docker compose down
 
-### ▶️ Step 1: Clone the Repository
+⚡ Optional: Run in Background
+    docker compose up -d
 
-```bash
-git clone <your-repo-link>
-cd ml-api-project
-```
-
----
-
-### ▶️ Step 2: Run the Application
-
-```bash
-docker compose up --build
-```
-
----
-
-### ▶️ Step 3: Access the API
-
-Open your browser:
-
-```
-http://localhost:8000/docs
-```
-
-Swagger UI will open.
-
----
-
-### ▶️ Step 4: Stop the Application
-
-```bash
-docker compose down
-```
-
----
-
-### ⚡ Optional: Run in Background
-
-```bash
-docker compose up -d
-```
-
----
-
-### 📌 Notes
-
-- Environment variables are loaded from `.env`  
-- Model is loaded using volume mapping  
-- No manual setup required  
+📌 Notes
+    Environment variables are loaded from .env
+    Model is mounted using volumes
+    No manual setup required
