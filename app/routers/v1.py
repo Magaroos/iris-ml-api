@@ -1,6 +1,7 @@
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Request, Depends
 import numpy as np
 from app.config import settings
+from app.security import verify_api_key
 
 from app.models.schemas import (
     PredictionInput,
@@ -13,9 +14,13 @@ from app.logging_config import logger
 router = APIRouter(prefix="/api/v1")
 
 
-# 🔹 Single Prediction
+# 🔐 Single Prediction (Protected)
 @router.post("/predict", response_model=PredictionOutput)
-def predict(request: Request, input_data: PredictionInput):
+def predict(
+    request: Request,
+    input_data: PredictionInput,
+    dep=Depends(verify_api_key)   
+):
     request_id = request.state.request_id
 
     try:
@@ -51,21 +56,25 @@ def predict(request: Request, input_data: PredictionInput):
         raise HTTPException(status_code=500, detail="Prediction failed")
 
 
-# 🔹 Batch Prediction (SIMPLIFIED)
+# 🔐 Batch Prediction (Protected)
 @router.post("/predict-batch", response_model=PredictionBatchOutput)
-def predict_batch(request: Request, input_data: PredictionBatchInput):
+def predict_batch(
+    request: Request,
+    input_data: PredictionBatchInput,
+    dep=Depends(verify_api_key)   
+):
     if len(input_data.inputs) > settings.MAX_BATCH_SIZE:
         raise HTTPException(
             status_code=400,
             detail=f"Max batch size is {settings.MAX_BATCH_SIZE}"
         )
+
     request_id = request.state.request_id
 
     try:
         model = request.app.state.model
         le = request.app.state.le
 
-        # ✅ Convert list → NumPy
         data = np.array([
             [
                 item.sepal_length,
@@ -76,13 +85,11 @@ def predict_batch(request: Request, input_data: PredictionBatchInput):
             for item in input_data.inputs
         ])
 
-        # ✅ Predict ALL at once
         preds = model.predict(data)
         probs = model.predict_proba(data)
 
         results = []
 
-        # ✅ Loop only to format output (NOT prediction)
         for i in range(len(preds)):
             label = le.inverse_transform([preds[i]])[0]
             confidence = float(max(probs[i]))
@@ -108,17 +115,23 @@ def predict_batch(request: Request, input_data: PredictionBatchInput):
         raise HTTPException(status_code=500, detail="Batch prediction failed")
 
 
-# 🔹 Health Check
+# 🔐 Health Check (Protected)
 @router.get("/health")
-def health_check(request: Request):
+def health_check(
+    request: Request,
+    dep=Depends(verify_api_key)   
+):
     return {
         "status": "ok",
         "model_loaded": hasattr(request.app.state, "model")
     }
 
-# 🔹 It tells the user what model is running behind your API
+
+# 🔐 Model Info (Protected)
 @router.get("/model-info")
-def model_info():
+def model_info(
+    dep=Depends(verify_api_key)  
+):
     return {
         "model_name": "RandomForestClassifier",
         "version": "v1",

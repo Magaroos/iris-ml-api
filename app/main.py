@@ -6,13 +6,23 @@ import joblib
 
 from app.logging_config import logger
 from app.routers.v1 import router as v1_router
-from app.config import settings
 from app.routers.v2 import router as v2_router
+from app.config import settings
+from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI(title=settings.API_TITLE)
 
-# ✅ Load model once at startup
+# ✅ CORS (better restricted)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# ✅ Load model once
 @app.on_event("startup")
 def load_model():
     app.state.model = joblib.load(settings.MODEL_PATH)
@@ -41,14 +51,14 @@ async def log_requests(request: Request, call_next):
     return response
 
 
-# ✅ Include router
+# ✅ Routers
 app.include_router(v1_router)
 app.include_router(v2_router)
 
 
 @app.get("/")
 def root():
-    return {"message": "ML API is alive (v1 ready)"}
+    return {"message": "ML API is running (v1 & v2 ready)"}
 
 
 # ✅ Global Exception Handler

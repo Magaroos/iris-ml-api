@@ -118,3 +118,27 @@
 2026-09-04 16:36:42,510 | INFO | POST /api/v1/predict | request_id=166bfe86-f66b-4f6f-9719-2dc51caec046 | time=0.0545s
 2026-09-04 16:37:00,505 | INFO | GET /api/v1/health | request_id=9fff1411-e59c-4b15-bac4-29a29eb2465f | time=0.0010s
 2026-09-04 16:37:12,591 | INFO | GET / | request_id=4d768318-2742-468b-825b-a4828e4da879 | time=0.0000s
+2026-09-09 11:06:47,920 | INFO | Model loaded from ml/saved_model/model.joblib
+2026-09-09 11:07:15,472 | INFO | GET /docs | request_id=11ed6405-0230-4cd0-8298-5ce980141fe4 | time=0.0000s
+2026-09-09 11:07:15,653 | INFO | GET /openapi.json | request_id=21745b33-41e8-4478-b3ce-52d6b3673975 | time=0.0153s
+2026-09-09 11:41:01,439 | INFO | Prediction success | request_id=e50c54b0-9e87-40c6-bba0-605849ae6a9b | result=setosa | confidence=0.52
+2026-09-09 11:41:01,439 | INFO | POST /api/v1/predict | request_id=e50c54b0-9e87-40c6-bba0-605849ae6a9b | time=0.0635s
+2026-09-09 11:46:47,974 | INFO | Model loaded from ml/saved_model/model.joblib
+2026-09-09 11:47:20,130 | INFO | Model loaded from ml/saved_model/model.joblib
+2026-09-09 11:47:30,166 | INFO | GET /docs | request_id=d7602434-6b73-4a90-8614-788e1a386528 | time=0.0000s
+2026-09-09 11:47:30,348 | INFO | GET /openapi.json | request_id=377db35f-1eea-4d18-85f4-a8f402162576 | time=0.0160s
+2026-09-09 11:47:31,815 | INFO | GET /docs | request_id=bbdd47b2-22b3-447d-9805-991fada8a625 | time=0.0007s
+2026-09-09 11:47:31,861 | INFO | GET /openapi.json | request_id=70a05d9b-7a95-447c-8bbc-5c3c6d2dab1a | time=0.0027s
+2026-09-09 11:47:46,172 | INFO | POST /api/v1/predict | request_id=5b5e2d99-dbd5-4693-9892-3bb405ad95af | time=0.0040s
+2026-09-09 11:48:11,770 | INFO | Prediction success | request_id=5e093bae-0d1c-4c78-a982-d4f0ed90a0d2 | result=setosa | confidence=0.52
+2026-09-09 11:48:11,770 | INFO | POST /api/v1/predict | request_id=5e093bae-0d1c-4c78-a982-d4f0ed90a0d2 | time=0.0450s
+2026-09-09 11:49:28,555 | INFO | POST /api/v1/predict | request_id=917c09e6-fcc1-47c4-aaae-37a2f55b360e | time=0.0000s
+2026-09-09 11:50:45,209 | INFO | POST /api/v1/predict | request_id=84c31b87-28b6-4179-a64f-69985babbbbd | time=0.0015s
+2026-09-09 11:50:57,398 | INFO | POST /api/v2/predict | request_id=83f18474-63e8-4959-b456-59f217f2490b | time=0.0014s
+2026-09-09 12:49:03,062 | INFO | GET /docs | request_id=58987d27-19d7-4449-aca3-bed389367dcc | time=0.0000s
+2026-09-09 12:49:03,135 | INFO | GET /openapi.json | request_id=8b83f9dd-9558-4ad9-9fa7-b598d6717feb | time=0.0000s
+2026-09-09 12:49:20,075 | INFO | POST /api/v1/predict | request_id=3e400f0c-7de7-4d4c-ad9b-770c82a71e26 | time=0.0020s
+2026-09-09 12:49:38,287 | INFO | POST /api/v1/predict | request_id=2e1ae04f-47b4-4b4f-b2cc-be7bf3cd7808 | time=0.0018s
+2026-09-09 12:51:57,174 | INFO | Prediction success | request_id=2d5ea334-9914-46d3-b6cb-cc4c56003f4b | result=setosa | confidence=0.52
+2026-09-09 12:51:57,174 | INFO | POST /api/v1/predict | request_id=2d5ea334-9914-46d3-b6cb-cc4c56003f4b | time=0.0163s
+2026-09-09 12:55:01,252 | INFO | Model loaded from ml/saved_model/model.joblib

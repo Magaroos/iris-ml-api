@@ -1,14 +1,20 @@
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Request, Depends
 import numpy as np
 
 from app.models.schemas import PredictionInput
 from app.logging_config import logger
+from app.security import verify_api_key
 
 router = APIRouter(prefix="/api/v2")
 
 
-@router.post("/predict")   # ✅ ONLY ONE ENDPOINT
-def predict_v2(request: Request, input_data: PredictionInput):
+# 🔐 V2 Prediction (Protected)
+@router.post("/predict")
+def predict_v2(
+    request: Request,
+    input_data: PredictionInput,
+    dep=Depends(verify_api_key)   
+):
     request_id = request.state.request_id
 
     try:
@@ -32,8 +38,8 @@ def predict_v2(request: Request, input_data: PredictionInput):
 
         return {
             "prediction": result,
-            "probability": probability,   # ✅ changed
-            "model_version": "v2",        # ✅ new
+            "probability": probability,
+            "model_version": "v2",
             "request_id": request_id
         }
 
