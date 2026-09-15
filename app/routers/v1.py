@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, Request, Depends
 import numpy as np
 from app.config import settings
 from app.security import verify_api_key
+from app.metrics import prediction_counter
 
 from app.models.schemas import (
     PredictionInput,
@@ -21,6 +22,7 @@ def predict(
     input_data: PredictionInput,
     dep=Depends(verify_api_key)   
 ):
+    prediction_counter.inc()
     request_id = request.state.request_id
 
     try:

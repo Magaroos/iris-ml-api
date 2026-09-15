@@ -9,14 +9,17 @@ from app.routers.v1 import router as v1_router
 from app.routers.v2 import router as v2_router
 from app.config import settings
 from fastapi.middleware.cors import CORSMiddleware
+from prometheus_fastapi_instrumentator import Instrumentator
+from prometheus_client import Counter
 
 
 app = FastAPI(title=settings.API_TITLE)
+Instrumentator().instrument(app).expose(app)
 
 # ✅ CORS (better restricted)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  
+    allow_origins=["*"],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

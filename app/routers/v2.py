@@ -4,6 +4,7 @@ import numpy as np
 from app.models.schemas import PredictionInput
 from app.logging_config import logger
 from app.security import verify_api_key
+from app.metrics import prediction_counter
 
 router = APIRouter(prefix="/api/v2")
 
@@ -15,6 +16,7 @@ def predict_v2(
     input_data: PredictionInput,
     dep=Depends(verify_api_key)   
 ):
+    prediction_counter.inc()
     request_id = request.state.request_id
 
     try:
