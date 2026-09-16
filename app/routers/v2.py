@@ -16,7 +16,6 @@ def predict_v2(
     input_data: PredictionInput,
     dep=Depends(verify_api_key)   
 ):
-    prediction_counter.inc()
     request_id = request.state.request_id
 
     try:
@@ -33,6 +32,8 @@ def predict_v2(
         prediction = model.predict(data)[0]
         probability = float(model.predict_proba(data).max())
         result = le.inverse_transform([prediction])[0]
+
+        prediction_counter.labels(prediction=str(result)).inc()
 
         logger.info(
             f"V2 Prediction success | request_id={request_id}"

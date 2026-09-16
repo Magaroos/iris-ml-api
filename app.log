@@ -205,3 +205,42 @@
 2026-09-15 16:30:10,953 | INFO | POST /api/v1/predict | request_id=b3faa253-84e4-465f-b44c-9e64e3ebd0af | time=0.0781s
 2026-09-15 16:30:11,812 | INFO | Prediction success | request_id=dcec36a3-23ac-4c3e-bd7a-6d73a5ab4503 | result=setosa | confidence=0.52
 2026-09-15 16:30:11,812 | INFO | POST /api/v1/predict | request_id=dcec36a3-23ac-4c3e-bd7a-6d73a5ab4503 | time=0.0922s
+2026-09-15 16:30:15,537 | INFO | GET /metrics | request_id=4dc9fd65-bb8f-4453-9c9a-992162902be0 | time=0.0023s
+2026-09-16 09:41:42,294 | INFO | Model loaded from ml/saved_model/model.joblib
+2026-09-16 09:41:42,496 | INFO | GET /docs | request_id=4770d10d-9731-469e-af3e-c3b67163eae9 | time=0.0082s
+2026-09-16 09:41:42,689 | INFO | GET /openapi.json | request_id=25697007-6af6-4eb9-9289-a64b803c0c29 | time=0.0400s
+2026-09-16 09:41:58,311 | INFO | Prediction success | request_id=3362d820-633d-4e6f-83b1-184a7462c984 | result=setosa | confidence=0.52
+2026-09-16 09:41:58,320 | INFO | POST /api/v1/predict | request_id=3362d820-633d-4e6f-83b1-184a7462c984 | time=0.1948s
+2026-09-16 09:42:03,909 | INFO | Prediction success | request_id=c76da9ba-e574-486f-ab91-4bff8e18bd3f | result=setosa | confidence=0.52
+2026-09-16 09:42:03,909 | INFO | POST /api/v1/predict | request_id=c76da9ba-e574-486f-ab91-4bff8e18bd3f | time=0.1093s
+2026-09-16 09:42:04,692 | INFO | Prediction success | request_id=394f1088-a4ab-464b-94be-97164f05b227 | result=setosa | confidence=0.52
+2026-09-16 09:42:04,700 | INFO | POST /api/v1/predict | request_id=394f1088-a4ab-464b-94be-97164f05b227 | time=0.1102s
+2026-09-16 09:42:05,274 | INFO | Prediction success | request_id=f2f2b95d-5afe-4cbf-8822-5784dead6580 | result=setosa | confidence=0.52
+2026-09-16 09:42:05,274 | INFO | POST /api/v1/predict | request_id=f2f2b95d-5afe-4cbf-8822-5784dead6580 | time=0.0824s
+2026-09-16 09:42:05,933 | INFO | Prediction success | request_id=743670e4-74a5-4862-b64d-a2416b3ef027 | result=setosa | confidence=0.52
+2026-09-16 09:42:05,934 | INFO | POST /api/v1/predict | request_id=743670e4-74a5-4862-b64d-a2416b3ef027 | time=0.2268s
+2026-09-16 09:42:06,403 | INFO | Prediction success | request_id=f1ffd8d9-9e69-43e4-b88d-68cc69ec3b37 | result=setosa | confidence=0.52
+2026-09-16 09:42:06,408 | INFO | POST /api/v1/predict | request_id=f1ffd8d9-9e69-43e4-b88d-68cc69ec3b37 | time=0.0962s
+2026-09-16 09:42:07,149 | INFO | Prediction success | request_id=fd0aff10-1ecc-45d5-9154-762290f49a45 | result=setosa | confidence=0.52
+2026-09-16 09:42:07,158 | INFO | POST /api/v1/predict | request_id=fd0aff10-1ecc-45d5-9154-762290f49a45 | time=0.1169s
+2026-09-16 09:42:08,299 | INFO | Prediction success | request_id=639413ab-b882-4492-8c42-e37cea688963 | result=setosa | confidence=0.52
+2026-09-16 09:42:08,308 | INFO | POST /api/v1/predict | request_id=639413ab-b882-4492-8c42-e37cea688963 | time=0.1422s
+2026-09-16 09:42:09,066 | INFO | Prediction success | request_id=8e914a3c-5baa-4139-a1eb-275716bed863 | result=setosa | confidence=0.52
+2026-09-16 09:42:09,066 | INFO | POST /api/v1/predict | request_id=8e914a3c-5baa-4139-a1eb-275716bed863 | time=0.1173s
+2026-09-16 09:42:09,825 | INFO | Prediction success | request_id=ec46cf06-2b59-44ba-8e34-bbb304365f8f | result=setosa | confidence=0.52
+2026-09-16 09:42:09,832 | INFO | POST /api/v1/predict | request_id=ec46cf06-2b59-44ba-8e34-bbb304365f8f | time=0.1169s
+2026-09-16 09:42:19,513 | INFO | GET /docs | request_id=ab3998ca-86a4-4d20-9853-c2c7738ada14 | time=0.0000s
+2026-09-16 09:42:19,628 | INFO | GET /openapi.json | request_id=487ebb29-ad32-4431-8e78-1d00a222260e | time=0.0020s
+2026-09-16 09:42:20,395 | INFO | GET /metrics | request_id=a2db920a-aab3-4c59-ba91-4f468aaec673 | time=0.0149s
+2026-09-16 09:42:20,447 | INFO | GET /favicon.ico | request_id=830d24b1-175e-4229-b86e-4ae8ff7cbc2d | time=0.0000s
+2026-09-16 09:43:29,547 | INFO | Prediction success | request_id=03153686-61d8-48c7-a0fb-280c2a07a4f4 | result=virginica | confidence=0.81
+2026-09-16 09:43:29,555 | INFO | POST /api/v1/predict | request_id=03153686-61d8-48c7-a0fb-280c2a07a4f4 | time=0.1425s
+2026-09-16 09:43:33,378 | INFO | Prediction success | request_id=2841fb38-b0f1-49eb-a822-be2dba312a54 | result=virginica | confidence=0.81
+2026-09-16 09:43:33,385 | INFO | POST /api/v1/predict | request_id=2841fb38-b0f1-49eb-a822-be2dba312a54 | time=0.1076s
+2026-09-16 09:43:33,960 | INFO | Prediction success | request_id=22580b88-c9c4-46a1-b5ed-5999287fde5f | result=virginica | confidence=0.81
+2026-09-16 09:43:33,969 | INFO | POST /api/v1/predict | request_id=22580b88-c9c4-46a1-b5ed-5999287fde5f | time=0.1130s
+2026-09-16 09:43:34,844 | INFO | Prediction success | request_id=73eb70ee-1afa-47db-afe6-b7e6c912ade6 | result=virginica | confidence=0.81
+2026-09-16 09:43:34,869 | INFO | POST /api/v1/predict | request_id=73eb70ee-1afa-47db-afe6-b7e6c912ade6 | time=0.1989s
+2026-09-16 09:43:35,411 | INFO | Prediction success | request_id=257de9fe-9972-474a-b78a-564138f19502 | result=virginica | confidence=0.81
+2026-09-16 09:43:35,418 | INFO | POST /api/v1/predict | request_id=257de9fe-9972-474a-b78a-564138f19502 | time=0.1081s
+2026-09-16 09:43:40,037 | INFO | GET /metrics | request_id=e7a3154f-fdd7-4d8d-a9d4-274c14c70cee | time=0.0034s

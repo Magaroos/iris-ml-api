@@ -14,4 +14,4 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
-print("Loaded MODEL_PATH:", Settings().MODEL_PATH)
+print("Loaded MODEL_PATH:", settings.MODEL_PATH)

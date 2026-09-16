@@ -22,7 +22,6 @@ def predict(
     input_data: PredictionInput,
     dep=Depends(verify_api_key)   
 ):
-    prediction_counter.inc()
     request_id = request.state.request_id
 
     try:
@@ -40,6 +39,9 @@ def predict(
         confidence = float(model.predict_proba(data).max())
         result = le.inverse_transform([prediction])[0]
 
+        # ✅ MOVE HERE (after result is defined)
+        prediction_counter.labels(prediction=str(result)).inc()
+
         logger.info(
             f"Prediction success | request_id={request_id} | "
             f"result={result} | confidence={confidence}"
@@ -56,7 +58,6 @@ def predict(
             f"Prediction failed | request_id={request_id} | error={str(e)}"
         )
         raise HTTPException(status_code=500, detail="Prediction failed")
-
 
 # 🔐 Batch Prediction (Protected)
 @router.post("/predict-batch", response_model=PredictionBatchOutput)

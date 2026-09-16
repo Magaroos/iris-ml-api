@@ -10,22 +10,20 @@ from app.routers.v2 import router as v2_router
 from app.config import settings
 from fastapi.middleware.cors import CORSMiddleware
 from prometheus_fastapi_instrumentator import Instrumentator
-from prometheus_client import Counter
-
 
 app = FastAPI(title=settings.API_TITLE)
 Instrumentator().instrument(app).expose(app)
 
-# ✅ CORS (better restricted)
+# ✅ CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# ✅ Load model once
+# ✅ Load model
 @app.on_event("startup")
 def load_model():
     app.state.model = joblib.load(settings.MODEL_PATH)
@@ -33,12 +31,10 @@ def load_model():
 
     logger.info(f"Model loaded from {settings.MODEL_PATH}")
 
-
 # ✅ Middleware
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
     start_time = time.time()
-
     request.state.request_id = str(uuid.uuid4())
 
     response = await call_next(request)
@@ -53,24 +49,18 @@ async def log_requests(request: Request, call_next):
 
     return response
 
-
 # ✅ Routers
 app.include_router(v1_router)
 app.include_router(v2_router)
-
 
 @app.get("/")
 def root():
     return {"message": "ML API is running (v1 & v2 ready)"}
 
-
-# ✅ Global Exception Handler
+# ✅ Exception handler
 @app.exception_handler(ValueError)
 def value_error_handler(request: Request, exc: ValueError):
     return JSONResponse(
         status_code=400,
-        content={
-            "error": "Invalid data format",
-            "detail": str(exc)
-        }
+        content={"error": "Invalid data format", "detail": str(exc)}
     )
