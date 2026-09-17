@@ -23,8 +23,6 @@ def test_batch_limit(client):
             }
         ]
     }
-
-    # 👇 only fails if MAX_BATCH_SIZE < 3
     if settings.MAX_BATCH_SIZE < 3:
         response = client.post("/api/v1/predict-batch", json=payload)
         assert response.status_code == 400
