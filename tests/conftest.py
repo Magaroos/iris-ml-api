@@ -7,7 +7,6 @@ from app.config import settings
 
 @pytest.fixture
 def client():
-    # ✅ manually load model for tests
     app.state.model = joblib.load(settings.MODEL_PATH)
     app.state.le = joblib.load("ml/saved_model/label_encoder.joblib")
 
