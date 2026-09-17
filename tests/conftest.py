@@ -1,13 +1,26 @@
+# tests/conftest.py
 import pytest
 from fastapi.testclient import TestClient
-from app.main import app
 import joblib
 from app.config import settings
+from app.main import app
 
-
-@pytest.fixture
+@pytest.fixture(scope="session")
 def client():
+    """
+    Create a TestClient for the FastAPI app with the ML model and label encoder
+    loaded into app.state. DO NOT add a global X-API-Key header here — tests
+    that validate security depend on missing/wrong headers.
+    """
+    # load model & label encoder once for tests
     app.state.model = joblib.load(settings.MODEL_PATH)
-    app.state.le = joblib.load("ml/saved_model/label_encoder.joblib")
+    # If your Settings includes LABEL_ENCODER_PATH use it else fallback
+    try:
+        le_path = settings.LABEL_ENCODER_PATH
+    except AttributeError:
+        le_path = "ml/saved_model/label_encoder.joblib"
 
-    return TestClient(app)
+    app.state.le = joblib.load(le_path)
+
+    with TestClient(app) as client:
+        yield client
