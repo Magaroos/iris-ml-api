@@ -1,55 +1,99 @@
 # 🚀 ML Prediction API (Dockerized with Compose)
 
 ## 📌 Overview
-
-This project is a **production-style Machine Learning API** built using **FastAPI** and fully containerized using **Docker and Docker Compose**.
-
-It serves predictions from a trained ML model (Iris dataset) and demonstrates real-world **backend + DevOps practices**.
+This is a **production-style Machine Learning API** built with **FastAPI** and containerized with **Docker / Docker Compose**.  
+It serves predictions from a trained model (Iris dataset) and demonstrates backend + DevOps practices: validation, versioned endpoints, logging, Prometheus metrics, integration & load testing, and containerized runs.
 
 ---
 
-## 🧠 What This API Does
+## 🧠 What this API does
+- Predicts the Iris flower class from 4 numeric features.
+- Supports single and batch predictions.
+- Exposes Prometheus-format metrics for monitoring.
+- Has basic API key protection for endpoints (header `X-API-Key`).
 
-The API predicts the class of an input flower using a trained Machine Learning model.
-
-### Features
-
-- ✅ Single prediction  
-- ✅ Batch prediction (multiple inputs)  
-- ✅ Input validation  
-- ✅ API versioning (v1 & v2)  
-- ✅ Structured responses  
-- ✅ Logging & request tracking  
-
----
-
-## ⚙️ Tech Stack
-
-- **Backend**: FastAPI  
-- **Machine Learning**: Scikit-learn  
-- **Containerization**: Docker  
-- **Orchestration**: Docker Compose  
-- **Testing**: Pytest  
-- **Config Management**: Environment Variables (.env)  
+### Key features
+- ✅ Single prediction (`/api/v1/predict`)  
+- ✅ Batch prediction (`/api/v1/predict-batch`)  
+- ✅ Input validation with Pydantic  
+- ✅ API versioning (`/api/v1`, `/api/v2`)  
+- ✅ Logging with request IDs  
+- ✅ Prometheus metrics (`/metrics`) with labeled prediction counts  
+- ✅ Dockerized + Compose orchestration  
+- ✅ Unit tests (pytest), integration test (HTTP against running container), and a basic load test
 
 ---
 
-## ⚙️ API Endpoints
+## ⚙️ Tech stack
+- Backend: **FastAPI**  
+- ML: **scikit-learn** (pretrained RandomForest)  
+- Containerization: **Docker**, **Docker Compose**  
+- Monitoring: **Prometheus** (optional service), in-app metrics via `prometheus_fastapi_instrumentator`  
+- Testing: **pytest**, custom `integration_test_http.py`, `load_test.py`  
+- Config: environment variables from `.env`
 
-### 🔹 Health Check
-**GET** `/api/v1/health`
+---
 
+## 📁 Project structure (short)
+
+ml-api-project/
+├── app/
+│ ├── main.py
+│ ├── config.py
+│ ├── metrics.py
+│ ├── security.py
+│ ├── routers/
+│ │ ├── v1.py
+│ │ └── v2.py
+│ ├── models/
+│ │ └── schemas.py
+│ ├── logging_config.py
+├── ml/
+│ └── saved_model/
+│ ├── model.joblib
+│ └── label_encoder.joblib
+├── tests/
+├── integration_test_http.py
+├── load_test.py
+├── TESTING.md
+├── test_results.txt
+├── .env
+├── Dockerfile
+├── docker-compose.yml
+├── requirements.txt
+└── README.md
+
+
+---
+
+## ⚙️ Configuration (.env)
+Use environment variables (do **not** commit secrets). Example `.env`:
+
+MODEL_PATH=ml/saved_model/model.joblib
+LABEL_ENCODER_PATH=ml/saved_model/label_encoder.joblib
+API_TITLE=ML API
+MAX_BATCH_SIZE=3
+LOG_LEVEL=INFO
+API_KEY=mysecretkey
+
+> The app reads these at startup via `pydantic-settings`.
+
+---
+
+## 🔌 API Endpoints & Examples
+
+### 🔹 Health check
+**GET** `/api/v1/health`  
+Response:
 ```json
 {
   "status": "ok",
   "model_loaded": true
 }
-
-🔹 Single Prediction (v1)
+🔹 Single prediction (v1)
 
 POST /api/v1/predict
-
-Request
+Request body:
 
 {
   "sepal_length": 5.1,
@@ -58,178 +102,168 @@ Request
   "petal_width": 0.2
 }
 
-Response
+Response:
 
 {
   "prediction": "setosa",
   "confidence": 0.95,
-  "request_id": "abc-123"
+  "request_id": "uuid"
 }
-🔹 Batch Prediction
+🔹 Batch prediction (v1)
 
 POST /api/v1/predict-batch
+Request:
 
 {
   "inputs": [
-    { "...": "..." },
-    { "...": "..." }
+    {"sepal_length":5.1,"sepal_width":3.5,"petal_length":1.4,"petal_width":0.2},
+    {"sepal_length":6.2,"sepal_width":2.8,"petal_length":4.8,"petal_width":1.8}
   ]
 }
-🔹 Model Info
+
+Response:
+
+{
+  "predictions": [
+    {"prediction":"setosa","confidence":1.0,"request_id":"uuid"},
+    {"prediction":"virginica","confidence":0.95,"request_id":"uuid"}
+  ]
+}
+🔹 Model info
 
 GET /api/v1/model-info
+Response:
 
 {
   "model_name": "RandomForestClassifier",
   "version": "v1",
-  "features": [
-    "sepal_length",
-    "sepal_width",
-    "petal_length",
-    "petal_width"
-  ]
+  "features": ["sepal_length","sepal_width","petal_length","petal_width"]
 }
-🔹 Prediction (v2)
+🔹 V2 prediction
 
 POST /api/v2/predict
+Response includes model_version and uses the key probability instead of confidence.
 
-{
-  "prediction": "setosa",
-  "probability": 0.95,
-  "model_version": "v2",
-  "request_id": "abc-123"
+🔐 Authorization (local dev)
+
+Protected endpoints expect header:
+
+X-API-Key: mysecretkey
+
+You can use Swagger UI (http://localhost:8000/docs) → Authorize to set X-API-Key.
+
+📊 Metrics (Prometheus)
+Endpoint: GET /metrics
+The app uses prometheus_fastapi_instrumentator and registers a labeled counter:
+prediction_counter_total{prediction="<label>"}
+Example snippet:
+# TYPE prediction_counter_total counter
+prediction_counter_total{prediction="setosa"}  17.0
+prediction_counter_total{prediction="virginica"} 10.0
+
+Note: You can optionally add a Prometheus container in docker-compose.yml to scrape /metrics and add Grafana for dashboards.
+
+🧪 Testing
+Unit tests (pytest)
+
+Run locally in venv:
+
+python -m pytest -q
+
+Expected (project): 9 passed (your local run may vary).
+
+Saved test output: test_results.txt
+
+Integration test (hits running container)
+
+File: integration_test_http.py — runs HTTP requests against http://localhost:8000.
+Run after docker compose up --build:
+
+python integration_test_http.py
+
+Expect: "Integration test PASSED."
+
+Load test (basic)
+
+File: load_test.py — sends concurrent requests to /api/v1/predict to exercise the service and metrics. Example random input snippet:
+
+import random
+DATA = {
+  "sepal_length": random.uniform(4.0, 7.0),
+  "sepal_width": random.uniform(2.0, 4.5),
+  "petal_length": random.uniform(1.0, 6.0),
+  "petal_width": random.uniform(0.1, 2.5)
 }
 
+Run:
 
-🔄 API Versioning
-Version	      Purpose
-v1	          Stable API
-v2	          Improved response
+python load_test.py
 
-Key                       Differences
-v1	                      v2
-confidence	              probability
-❌ No version info	      ✅ Includes model_version
+Watch /metrics to confirm counters increment.
 
-📦 Project Structure
-ml-api-project/
-│
-├── app/
-│   ├── main.py
-│   ├── config.py
-│   ├── routers/
-│   │   ├── v1.py
-│   │   └── v2.py
-│   ├── models/
-│   │   └── schemas.py
-│   ├── logging_config.py
-│
-├── ml/
-│   └── saved_model/
-│
-├── tests/
-│
-├── .env
-├── Dockerfile
-├── docker-compose.yml
-├── requirements.txt
-└── README.md
+🐳 Docker & run
+Prerequisites
+Docker (Desktop) installed and running
+(Optional) Docker Compose v2 (or docker compose CLI)
+Start (development / local)
 
-⚙️ Configuration (.env)
-Environment variables are used instead of hardcoding values.
+From project root:
 
-    MODEL_PATH=ml/saved_model/model.joblib
-    MAX_BATCH_SIZE=5
-    API_TITLE=ML Prediction API
-    LOG_LEVEL=INFO
+docker compose up --build
 
-Used automatically by Docker Compose at runtime.
+App will be at: http://localhost:8000
+Swagger UI: http://localhost:8000/docs
 
-🐳 Docker & Containerization
-Dockerfile
-    - Defines how the application is built
-    - Installs dependencies
-    - Runs FastAPI using Uvicorn
+Stop:
 
-Docker Compose
-    - Manages container setup
-    - Loads environment variables
-    - Maps ports
-    - Supports volume mounting
+docker compose down
 
-Volume Usage
-    ./ml/saved_model:/app/ml/saved_model
+Notes:
 
-    👉 Allows updating the model without rebuilding the image
+Compose may show a warning about the top-level version field — harmless but you can remove version: "3.9" from docker-compose.yml if you prefer.
 
-🧪 Testing (Pytest)
-Run tests:
-    pytest -v
+If container starts then immediately exits (Exited 0), check container logs:
 
-Covered Cases
-    ✅ Health check
-    ✅ Valid prediction
-    ✅ Invalid input (422)
-    ✅ Batch prediction
-    ✅ Batch limit validation
-    ✅ API version testing
+docker compose ps -a
+docker logs ml-api-container --tail 200
+🛠 Troubleshooting (common issues)
+Docker can't connect: ensure Docker Desktop (daemon) is running.
+500 / 401 errors in Swagger: ensure X-API-Key is set in Authorize or when calling endpoints.
+Pytest fails with encoding error reading test_results.txt: ensure test_results.txt is plain text (UTF-8). If binary got in accidentally, remove/replace it.
+Port conflict: ensure nothing else listens on 8000.
+✅ What was added in Task 18 & 19 (short)
+Task 18: Prometheus instrumentation and metrics (app exposes /metrics and prediction_counter_total).
+Task 19: Integration tests (HTTP against running container) and load test script; fixed issues found; documented testing in TESTING.md, saved test_results.txt.
+🔮 Next steps / suggestions
+Add Grafana dashboard to visualize /metrics.
+Add GitHub Actions to run pytest on PRs.
+Add CI job to run integration test against a Docker Compose environment.
+Add graceful shutdown logging and liveness/readiness endpoints for Kubernetes readiness probes.
+🧾 Useful commands (copy-paste)
 
-🛡️ Validation & Error Handling
-Handled using Pydantic:
-    - Missing fields → 422
-    - Invalid data types → 422
-    - Batch overflow → 400
-    - Server errors → 500
+Start locally (build + run):
 
+docker compose up --build
 
-📊 Logging
-Each request includes:
-    - request_id
-    - logs for debugging
-    - error tracking
+Run unit tests locally:
 
-🚀 Key Concepts Demonstrated
-    - FastAPI API development
-    - ML model serving
-    - Docker containerization
-    - Docker Compose orchestration
-    - Environment-based configuration
-    - API versioning
-    - Automated testing
-    - Logging & validation
+python -m pytest -q
 
+Run integration test against running container:
+
+python integration_test_http.py
+
+Run load test:
+
+python load_test.py
+
+Open Swagger UI:
+
+http://localhost:8000/docs
+
+Check metrics:
+
+http://localhost:8000/metrics
 📌 Conclusion
-This project demonstrates how to build a scalable, maintainable, and production-ready ML API with modern backend and DevOps practices.
 
-It is:
-  ✅ Portable (runs anywhere using Docker)
-  ✅ Reproducible
-  ✅ Easy to deploy
-  ✅ Industry-ready
-
-🚀 How to Run This Project (Using Docker Compose)
-📌 Prerequisites
-Docker installed
-Docker Desktop running
-▶️ Step 1: Clone the Repository
-    git clone <your-repo-link>
-    cd ml-api-project
-
-▶️ Step 2: Run the Application
-    docker compose up --build
-
-▶️ Step 3: Access the API
-    Open in browser:
-    http://localhost:8000/docs
-    Swagger UI will open.
-
-▶️ Step 4: Stop the Application
-    docker compose down
-
-⚡ Optional: Run in Background
-    docker compose up -d
-
-📌 Notes
-    Environment variables are loaded from .env
-    Model is mounted using volumes
-    No manual setup required
+This repo demonstrates how to serve an ML model with a robust FastAPI service, containerize it, add observability (Prometheus metrics), and test it end-to-end (unit, integration, load). It’s portable, reproducible, and ready for the next steps: CI/CD, monitoring dashboards, and more advanced deployment.
